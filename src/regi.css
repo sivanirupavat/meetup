@@ -1,0 +1,48 @@
+@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+body{
+    margin: 0;
+    padding: 0;
+    font-family:'sen-serif';
+
+    background-size:cover;
+
+}
+.Register-page  {
+    width: 280px;
+    position: absolute;
+    top:280px;
+    left:100%;
+   transform:  translate(-50%,-50%) ;
+   color: black;
+}
+.Register-page h3{
+    float: left;
+    border-bottom: 6px solid  rgb(28, 105, 105);
+    margin-bottom: 20px;
+    padding: 4px 0;
+}
+.text-box{
+    width: 100%;
+    overflow: hidden;
+   font-size: 20px;
+    padding: 8px 0;
+    margin: 8px 0;
+    border-bottom: 3px solid  rgb(28, 105, 105);
+}
+.text-box i{
+    width:56px;
+    float: left;
+    text-align: center;
+}
+.text-box input{
+    border: none;
+    outline: none;
+    color: black;
+    background: none;
+    font-size: 18px;
+    width:100px;
+    float: left;
+    margin: 0 10px;
+}
+
+ 

@@ -1,0 +1,182 @@
+.logo-image img{
+ 
+  width:450px;
+  height: 85px;
+ 
+
+}
+.logo-image{
+  padding: 10px 450px;
+  margin: auto;
+}
+.navbar-inverse{
+  background-color: #bbb;
+}
+.carousel img {
+  width: 100px;
+  height: 500px;
+}
+
+
+
+/*hotel*/
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: 15px;
+  text-align: center;
+  font-family: arial;
+ padding: 5px;
+ 
+}
+
+
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+.overlay-right
+{
+    display: block;
+    opacity: 0;
+    position: absolute;
+    top: 10px;
+    margin-left: 0;
+    width:  70px;
+
+}
+.overlay-right .fa{
+    cursor: pointer;
+    background-color:black;
+    color:white;
+    height: 35px;
+    width:35px;
+    font-size: 20px;
+    padding:7px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+
+}
+.overlay-right .btn-secondary
+{
+    background:none !important;
+    border:none !important;
+    box-shadow: none !important;
+}
+.car:hover .overlay-right{
+       opacity: 1;
+       margin-left: 5%;
+       transition: 0.5s;
+}
+/*about*/
+body {
+  font: 600 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+  margin: 12px 0;
+}
+.card1-container {
+  cursor: pointer;
+  height: 250px;
+  perspective: 600;
+  position: relative;
+  width: 150px;
+  margin:15px;
+}
+.card1 {
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: all 1s ease-in-out;
+  width: 100%;
+}
+.card1:hover {
+  transform: rotateY(180deg);
+}
+.card1 .side {
+  backface-visibility: hidden;
+  border-radius: 6px;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+}
+.card1 .back {
+  background: #eaeaed;
+  color: #0087cc;
+  line-height: 150px;
+  text-align: center;
+  transform: rotateY(180deg);
+}
+/*contact us*/
+.car {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: 15px;
+  text-align: center;
+  font-family: arial;
+
+}
+
+.title1 {
+  color:black;
+  font-size: 18px;
+}
+
+.car .button1 {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.car .a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+  
+}
+
+.button1:hover, a:hover {
+  opacity: 0.7;
+}
+/*footer*/
+.footer{
+  margin-top: 200px;
+ background-color: black;
+  color: white;
+}
+.footer h1{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 25px;
+  padding: 5px;
+
+
+}
+.footer p{
+  font-size:12px;
+}
+
+.copyright{
+ font-family: courier New;
+  font-size: 100px;
+margin-bottom: -20px;
+  padding-bottom: 20px;
+  
+}

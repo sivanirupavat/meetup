@@ -1,26 +1,83 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import firebase from './firebase';
+import Login from './login';
+import Home from './Home';
+// import styledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import Booking from './booking'
+import Profile from './profile'
+import Saved from './saved'
+import register from './Register';
+// import Register from './Register';
+
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {},
+      isLoggedIn: false
+    }
+  }
+  componentDidMount() {
+    this.authListener();
+  }
+  authListener() {
+    // debugger
+    firebase.auth().onAuthStateChanged((user) => {
+      debugger
+      if (user) {
+        this.setState({ user: user, isLoggedIn: true });
+      }
+      else {
+        this.setState({ user: null, isLoggedIn: false });
+      }
+    });
+  }
+
+  render() {
+
+    let routes = null
+
+    if (this.state.isLoggedIn) {
+      debugger
+      routes = (
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            {/* <Route exact path="/login" component={Login} /> */}
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/saved" component={Saved} />
+            <Route exact path="/booking" component={Booking} />
+            <Route path="*" render={() => <Redirect to="/" />} />
+          </Switch>
+        </Router>
+      )
+    }
+    else {
+      debugger
+      routes = (
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/Register" component={register} />
+            <Route exact path="*" render={() => <Redirect to="/" />} />
+          </Switch>
+        </Router>
+      )
+    }
+
+    return (
+      <div className="ppl">
+        {routes}
+      </div>
+
+    );
+  }
 }
 
 export default App;
