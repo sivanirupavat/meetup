@@ -7,6 +7,7 @@ import {
     Card, CardImg, CardText, CardBody, CardLink,
     CardTitle, CardSubtitle
 } from 'reactstrap';
+import {Link} from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 // import 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -15,10 +16,7 @@ import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/rea
 
 // Be sure to include styles at some point, probably during your bootstraping
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import { Link } from 'react-router-dom';
-import Saved from './saved';
-import Booking from './booking';
-import Profile from './profile';
+
 
 
 class Home extends Component {
@@ -39,7 +37,7 @@ class Home extends Component {
         console.log(user, "user variable")
         return (
             <div>
-                <nav className="navbar navbar-inverse  navbar-static-top">
+                <nav className="navbar   navbar-stickybar">
                     <div className="container-fluid">
                         <div className="navbar-header">
                             <a className="navbar-brand">
@@ -50,7 +48,7 @@ class Home extends Component {
                         </div>
                         <form className="form-inline ml-auto ">
                             <input type="text" className="form-control mr-sm-2" placeholder="Search" />
-                            <button type="submit" className="btn btn-outline-light"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            <button type="submit" className="btn btn-dark"><i class="fa fa-search" aria-hidden="true"></i></button>
                         </form>
                     </div>
                 </nav>
@@ -109,12 +107,12 @@ class Home extends Component {
                         </NavItem>
                     </SideNav.Nav>
                 </SideNav>
-
+<div className="carousel">
                 <Carousel>
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="maxresdefault.jpg"
+                            src="/img/maxresdefault.jpg"
                             alt="First slide"
                         />
                         <Carousel.Caption>
@@ -125,7 +123,7 @@ class Home extends Component {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="My Post.png"
+                            src="/img/My Post.png"
                             alt="second slide"
                         />
 
@@ -137,7 +135,7 @@ class Home extends Component {
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src="cafe.jpg"
+                            src="/img/cafe.jpg"
                             alt="Third slide"
                         />
 
@@ -147,185 +145,185 @@ class Home extends Component {
                         </Carousel.Caption>
                     </Carousel.Item>
                 </Carousel>
-
-
+</div>
+{/**hotel */}
                 <div className="container" >
                     <Card className="car col-md-3">
-                        <CardImg top width="100%" src="/img/My Post.png" alt="Card image cap" />
+                        <CardImg top width="100%" height="100px" src="/img/download.jpg" alt="Card image cap" />
                         <CardBody>
-                            <CardTitle>Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                            <CardTitle>Ciclo Café</CardTitle>
+                            <CardSubtitle>47, Gandhi Mandapam Road, Kotturpuram, Chennai</CardSubtitle>
+                            <CardText>1200 for two people</CardText>
                             <div className="overlay-right">
                                 <Button type="button" class="btn btn-secondary" title="quick shop">
-                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
                                 </Button>
                                 <Button type="button" className="btn btn-secondary" title="wishlist">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
                                 </Button>
-                                <Button type="button" className="btn btn-secondary" title="add to cart">
-                                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <Button type="button"  className="btn btn-secondary" title="add to cart">
+                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
                                 </Button>
                             </div>
-                            <Button>Button</Button>
+                            <Button><Link to="/hotel">see profile</Link></Button>
                         </CardBody>
                     </Card>
                     <Card className="car  col-md-3">
-                        <CardImg top width="100%" src="/img/My Post.png" alt="Card image cap" />
+                        <CardImg top width="100%" height="100px" src="/img/caf2.jpg" alt="Card image cap" />
                         <CardBody>
-                            <CardTitle>Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                            <CardTitle>Flower Power Tea Room</CardTitle>
+                            <CardSubtitle>18, 5th Avenue, Thiruvalluvar Nagar, Besant Nagar, Chennai</CardSubtitle>
+                            <CardText>Rs 650 for two people</CardText>
                             <div className="overlay-right">
                                 <Button type="button" class="btn btn-secondary" title="quick shop">
-                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
                                 </Button>
                                 <Button type="button" className="btn btn-secondary" title="wishlist">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
                                 </Button>
-                                <Button type="button" className="btn btn-secondary" title="add to cart">
-                                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <Button type="button"  className="btn btn-secondary" title="add to cart">
+                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
                                 </Button>
                             </div>
 
-                            <Button>Button</Button>
+                            <Button><Link to="/hotel">see profile</Link></Button>
                         </CardBody>
                     </Card>
                     <Card className="car col-md-3 ">
-                        <CardImg top width="100%" src="/img/My Post.png" alt="Card image cap" />
+                        <CardImg top width="100%" height="100px" src="/img/caf3.jpg" alt="Card image cap" />
                         <CardBody>
-                            <CardTitle>Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                            <CardTitle>The Brew Room - The Savera Hotel</CardTitle>
+                            <CardSubtitle>146, RK Salai, Mylapore, Chennai</CardSubtitle>
+                            <CardText>₹1,100 for two people (approx.)</CardText>
                             <div className="overlay-right">
                                 <Button type="button" class="btn btn-secondary" title="quick shop">
-                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
                                 </Button>
                                 <Button type="button" className="btn btn-secondary" title="wishlist">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
                                 </Button>
-                                <Button type="button" className="btn btn-secondary" title="add to cart">
-                                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <Button type="button"  className="btn btn-secondary" title="add to cart">
+                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
                                 </Button>
                             </div>
-                            <Button>Button</Button>
+                            <Button><Link to="/hotel">see profile</Link></Button>
                         </CardBody>
                     </Card>
                     <Card className="car col-md-3 ">
-                        <CardImg top width="100%" src="/img/My Post.png" alt="Card image cap" />
+                        <CardImg top width="100%" height="100px" src="/img/caf4.jpg" alt="Card image cap" />
                         <CardBody>
-                            <CardTitle>Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                            <CardTitle>Writer's Cafe</CardTitle>
+                            <CardSubtitle>98, Peter's Road, Behind Philip's Service Centre, Gopalapuram, Chennai</CardSubtitle>
+                            <CardText>₹1,100 for two people (approx.)</CardText>
                             <div className="overlay-right">
                                 <Button type="button" class="btn btn-secondary" title="quick shop">
-                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
                                 </Button>
                                 <Button type="button" className="btn btn-secondary" title="wishlist">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
                                 </Button>
-                                <Button type="button" className="btn btn-secondary" title="add to cart">
-                                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <Button type="button"  className="btn btn-secondary" title="add to cart">
+                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
                                 </Button>
                             </div>
-                            <Button>Button</Button>
+                            <Button><Link to="/hotel">see profile</Link></Button>
                         </CardBody>
                     </Card>
                     <Card className="car col-md-3">
-                        <CardImg top width="100%" src="/img/My Post.png" alt="Card image cap" />
+                        <CardImg top width="100%" height="100px" src="/img/caf5.jpg" alt="Card image cap" />
                         <CardBody>
-                            <CardTitle>Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                            <CardTitle>Wild Garden Cafe - Amethyst</CardTitle>
+                            <CardSubtitle>Whites Road, Royapettah, Chennai</CardSubtitle>
+                            <CardText>₹1,400 for two people (approx.)</CardText>
                             <div className="overlay-right">
                                 <Button type="button" class="btn btn-secondary" title="quick shop">
-                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
                                 </Button>
                                 <Button type="button" className="btn btn-secondary" title="wishlist">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
                                 </Button>
-                                <Button type="button" className="btn btn-secondary" title="add to cart">
-                                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <Button type="button"  className="btn btn-secondary" title="add to cart">
+                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
                                 </Button>
                             </div>
-                            <Button>Button</Button>
+                            <Button><Link to="/hotel">see profile</Link></Button>
                         </CardBody>
                     </Card>
                     <Card className="car col-md-3">
-                        <CardImg top width="100%" src="/img/My Post.png" alt="Card image cap" />
+                        <CardImg top width="100%" height="100px" src="/img/caf6.jpg" alt="Card image cap" />
                         <CardBody>
-                            <CardTitle>Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                            <CardTitle>Blind Ch3mistry</CardTitle>
+                            <CardSubtitle>Old 11, New 19, 1st Floor, Brindhavan Apartment, Khader Nawaz Khan Road, Nungambakkam, Chennai</CardSubtitle>
+                            <CardText>₹700 for two people (approx.) </CardText>
                             <div className="overlay-right">
                                 <Button type="button" class="btn btn-secondary" title="quick shop">
-                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
                                 </Button>
                                 <Button type="button" className="btn btn-secondary" title="wishlist">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
                                 </Button>
-                                <Button type="button" className="btn btn-secondary" title="add to cart">
-                                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <Button type="button"  className="btn btn-secondary" title="add to cart">
+                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
                                 </Button>
                             </div>
-                            <Button>Button</Button>
+                            <Button><Link to="/hotel">see profile</Link></Button>
                         </CardBody>
                     </Card>
                     <Card className="car col-md-3">
-                        <CardImg top width="100%" src="/img/My Post.png" alt="Card image cap" />
+                        <CardImg top width="100%" height="100px" src="/img/caf7.jpg" alt="Card image cap" />
                         <CardBody>
-                            <CardTitle>Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                            <CardTitle>Backyard Bistro</CardTitle>
+                            <CardSubtitle>1581, Bharathi Colony, J Block, 15th Main Road, Anna Nagar West, Chennai</CardSubtitle>
+                            <CardText>₹600 for two people (approx.)</CardText>
                             <div className="overlay-right">
                                 <Button type="button" class="btn btn-secondary" title="quick shop">
-                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
                                 </Button>
                                 <Button type="button" className="btn btn-secondary" title="wishlist">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
                                 </Button>
-                                <Button type="button" className="btn btn-secondary" title="add to cart">
-                                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <Button type="button"  className="btn btn-secondary" title="add to cart">
+                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
                                 </Button>
                             </div>
-                            <Button>Button</Button>
+                            <Button><Link to="/hotel">see profile</Link></Button>
                         </CardBody>
                     </Card>
                     <Card className="car col-md-3">
-                        <CardImg top width="100%" src="/img/My Post.png" alt="Card image cap" />
+                        <CardImg top width="100%" height="100px" src="/img/caf8.jpg" alt="Card image cap" />
                         <CardBody>
-                            <CardTitle>Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                            <CardTitle>Ashvita Bistro</CardTitle>
+                            <CardSubtitle>11, Bawa Road, Alwarpet, Chenna</CardSubtitle>
+                            <CardText>₹1,000 for two people (approx.)</CardText>
                             <div className="overlay-right">
                                 <Button type="button" class="btn btn-secondary" title="quick shop">
-                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
                                 </Button>
                                 <Button type="button" className="btn btn-secondary" title="wishlist">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
                                 </Button>
-                                <Button type="button" className="btn btn-secondary" title="add to cart">
-                                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <Button type="button"  className="btn btn-secondary" title="add to cart">
+                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
                                 </Button>
                             </div>
-                            <Button>Button</Button>
+                            <Button><Link to="/hotel">see profile</Link></Button>
                         </CardBody>
                     </Card>
                     <Card className="car col-md-3">
-                        <CardImg top width="100%" src="/img/My Post.png" alt="Card image cap" />
+                        <CardImg top width="100%" height="100px" src="/img/caf9.jpg" alt="Card image cap" />
                         <CardBody>
-                            <CardTitle>Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                            <CardTitle>The Bark</CardTitle>
+                            <CardSubtitle>40, Maharaja Surya Rao Road, Dutch Village, Alwarpet, Chennai</CardSubtitle>
+                            <CardText>₹800 for two people (approx.)</CardText>
                             <div className="overlay-right">
                                 <Button type="button" class="btn btn-secondary" title="quick shop">
-                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
                                 </Button>
                                 <Button type="button" className="btn btn-secondary" title="wishlist">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
                                 </Button>
-                                <Button type="button" className="btn btn-secondary" title="add to cart">
-                                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <Button type="button"  className="btn btn-secondary" title="add to cart">
+                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
                                 </Button>
                             </div>
                             <Button>Button</Button>
@@ -413,7 +411,7 @@ class Home extends Component {
                                     <p>Terms of Use</p>
                                     <p>Return Policy</p>
                                     <p>Discount Coupons</p>
-                                    <p>{user.email}</p>
+                                    
                                 </div>
 
                                 <div className="col-md-4">

@@ -9,6 +9,7 @@ import Home from './Home';
 import Booking from './booking'
 import Profile from './profile'
 import Saved from './saved'
+import Hotel from './hotel'
 import register from './Register';
 // import Register from './Register';
 
@@ -52,6 +53,7 @@ class App extends Component {
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/saved" component={Saved} />
             <Route exact path="/booking" component={Booking} />
+            <Route exact path="/hotel" component={Hotel}/>
             <Route path="*" render={() => <Redirect to="/" />} />
           </Switch>
         </Router>

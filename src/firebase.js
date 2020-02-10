@@ -17,10 +17,7 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-//google
-var provider= new firebase.auth.GoogleAuthProvider();
-// fb
-var fbprovider =new firebase.auth.FacebookAuthProvider();
+
 firebase.analytics();
 
 
