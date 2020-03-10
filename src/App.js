@@ -11,6 +11,8 @@ import Profile from './profile'
 import Saved from './saved'
 import Hotel from './hotel'
 import register from './Register';
+import gallery from './gallery';
+
 // import Register from './Register';
 
 
@@ -54,6 +56,7 @@ class App extends Component {
             <Route exact path="/saved" component={Saved} />
             <Route exact path="/booking" component={Booking} />
             <Route exact path="/hotel" component={Hotel}/>
+            <Route exact path="/gallery" component={gallery}/>
             <Route path="*" render={() => <Redirect to="/" />} />
           </Switch>
         </Router>
@@ -67,6 +70,7 @@ class App extends Component {
             <Route exact path="/" component={Login} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/Register" component={register} />
+            
             <Route exact path="*" render={() => <Redirect to="/" />} />
           </Switch>
         </Router>

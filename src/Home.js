@@ -1,40 +1,82 @@
 import React, { Component } from 'react';
 import './home.css';
 import firebase from './firebase';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import { Button, Navbar, NavbarBrand, FormGroup, Form, Input, Image } from 'reactstrap';
+import 'firebase/firestore';
+import { Button } from 'reactstrap';
 import {
     Card, CardImg, CardText, CardBody, CardLink,
     CardTitle, CardSubtitle
 } from 'reactstrap';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 // import 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 //import styles from './home.css';
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-
 // Be sure to include styles at some point, probably during your bootstraping
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 
 
 
 class Home extends Component {
+
+
     constructor(props) {
         super(props)
         this.state = {
-            user: null
+            user: null,
+            cafes: [],
+            save:[]
         }
         this.logout = this.logout.bind(this);
     }
+
     logout = () => {
         debugger
         firebase.auth().signOut();
     }
 
+    saveWishlist = (event, cafe) => {
+        event.preventDefault()
+        console.log("inside wishlist")
+        const user = firebase.auth().currentUser;
+        const db = firebase.firestore();
+        db.collection("save").add({
+            cafe: cafe,
+            user_id: user.uid
+        })
+    }
+
+    fetchCafes = () => {
+        const db = firebase.firestore();
+        db.settings({ timestampsInSnapshots: true });
+        db.collection("cafes").get().then((snapshot) => {
+            let cafeArray = []
+            snapshot.docs.forEach(doc => {
+                console.log(doc.data(), "doc")
+
+                /* Update the components state with query result */
+                cafeArray.push(doc.data())
+            });
+            if ((this.state.cafes && this.state.cafes.length !== cafeArray.length) || !this.state.cafes) {
+                this.setState({ cafes: cafeArray })
+            }
+        });
+    }
+
+
+
     render() {
+
         const user = firebase.auth().currentUser;
         console.log(user, "user variable")
+        if (user) {
+            this.fetchCafes()
+            
+        }
+        console.log(this.state.cafes)
+       
+        
         return (
             <div>
                 <nav className="navbar   navbar-stickybar">
@@ -46,9 +88,10 @@ class Home extends Component {
                                 </div>
                             </a>
                         </div>
+
                         <form className="form-inline ml-auto ">
-                            <input type="text" className="form-control mr-sm-2" placeholder="Search" />
-                            <button type="submit" className="btn btn-dark"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            <input type="text" className="form-control" placeholder="Search" />
+                            <button type="submit" className="btn btn-danger"><i class="fa fa-search" aria-hidden="true"></i></button>
                         </form>
                     </div>
                 </nav>
@@ -107,337 +150,190 @@ class Home extends Component {
                         </NavItem>
                     </SideNav.Nav>
                 </SideNav>
-<div className="carousel">
-                <Carousel>
-                    <Carousel.Item>
-                        <img
-                            className="d-block w-100"
-                            src="/img/maxresdefault.jpg"
-                            alt="First slide"
-                        />
-                        <Carousel.Caption>
-                            <h3>First slide label</h3>
-                            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img
-                            className="d-block w-100"
-                            src="/img/My Post.png"
-                            alt="second slide"
-                        />
+                <div className="carousel">
+                    <Carousel>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="/img/maxresdefault.jpg"
+                                alt="First slide"
+                            />
 
-                        <Carousel.Caption>
-                            <h3>Second slide label</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img
-                            className="d-block w-100"
-                            src="/img/cafe.jpg"
-                            alt="Third slide"
-                        />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="/img/My Post.png"
+                                alt="second slide"
+                            />
 
-                        <Carousel.Caption>
-                            <h3>Third slide label</h3>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                </Carousel>
-</div>
-{/**hotel */}
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="/img/cafe.jpg"
+                                alt="Third slide"
+                            />
+
+
+                        </Carousel.Item>
+                    </Carousel>
+                </div>
+                {/**hotel */}
                 <div className="container" >
-                    <Card className="car col-md-3">
-                        <CardImg top width="100%" height="100px" src="/img/download.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle>Ciclo Café</CardTitle>
-                            <CardSubtitle>47, Gandhi Mandapam Road, Kotturpuram, Chennai</CardSubtitle>
-                            <CardText>1200 for two people</CardText>
-                            <div className="overlay-right">
-                                <Button type="button" class="btn btn-secondary" title="quick shop">
-                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
-                                </Button>
-                                <Button type="button" className="btn btn-secondary" title="wishlist">
-                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
-                                </Button>
-                                <Button type="button"  className="btn btn-secondary" title="add to cart">
-                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
-                                </Button>
-                            </div>
-                            <Button><Link to="/hotel">see profile</Link></Button>
-                        </CardBody>
-                    </Card>
-                    <Card className="car  col-md-3">
-                        <CardImg top width="100%" height="100px" src="/img/caf2.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle>Flower Power Tea Room</CardTitle>
-                            <CardSubtitle>18, 5th Avenue, Thiruvalluvar Nagar, Besant Nagar, Chennai</CardSubtitle>
-                            <CardText>Rs 650 for two people</CardText>
-                            <div className="overlay-right">
-                                <Button type="button" class="btn btn-secondary" title="quick shop">
-                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
-                                </Button>
-                                <Button type="button" className="btn btn-secondary" title="wishlist">
-                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
-                                </Button>
-                                <Button type="button"  className="btn btn-secondary" title="add to cart">
-                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
-                                </Button>
-                            </div>
-
-                            <Button><Link to="/hotel">see profile</Link></Button>
-                        </CardBody>
-                    </Card>
-                    <Card className="car col-md-3 ">
-                        <CardImg top width="100%" height="100px" src="/img/caf3.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle>The Brew Room - The Savera Hotel</CardTitle>
-                            <CardSubtitle>146, RK Salai, Mylapore, Chennai</CardSubtitle>
-                            <CardText>₹1,100 for two people (approx.)</CardText>
-                            <div className="overlay-right">
-                                <Button type="button" class="btn btn-secondary" title="quick shop">
-                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
-                                </Button>
-                                <Button type="button" className="btn btn-secondary" title="wishlist">
-                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
-                                </Button>
-                                <Button type="button"  className="btn btn-secondary" title="add to cart">
-                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
-                                </Button>
-                            </div>
-                            <Button><Link to="/hotel">see profile</Link></Button>
-                        </CardBody>
-                    </Card>
-                    <Card className="car col-md-3 ">
-                        <CardImg top width="100%" height="100px" src="/img/caf4.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle>Writer's Cafe</CardTitle>
-                            <CardSubtitle>98, Peter's Road, Behind Philip's Service Centre, Gopalapuram, Chennai</CardSubtitle>
-                            <CardText>₹1,100 for two people (approx.)</CardText>
-                            <div className="overlay-right">
-                                <Button type="button" class="btn btn-secondary" title="quick shop">
-                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
-                                </Button>
-                                <Button type="button" className="btn btn-secondary" title="wishlist">
-                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
-                                </Button>
-                                <Button type="button"  className="btn btn-secondary" title="add to cart">
-                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
-                                </Button>
-                            </div>
-                            <Button><Link to="/hotel">see profile</Link></Button>
-                        </CardBody>
-                    </Card>
-                    <Card className="car col-md-3">
-                        <CardImg top width="100%" height="100px" src="/img/caf5.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle>Wild Garden Cafe - Amethyst</CardTitle>
-                            <CardSubtitle>Whites Road, Royapettah, Chennai</CardSubtitle>
-                            <CardText>₹1,400 for two people (approx.)</CardText>
-                            <div className="overlay-right">
-                                <Button type="button" class="btn btn-secondary" title="quick shop">
-                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
-                                </Button>
-                                <Button type="button" className="btn btn-secondary" title="wishlist">
-                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
-                                </Button>
-                                <Button type="button"  className="btn btn-secondary" title="add to cart">
-                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
-                                </Button>
-                            </div>
-                            <Button><Link to="/hotel">see profile</Link></Button>
-                        </CardBody>
-                    </Card>
-                    <Card className="car col-md-3">
-                        <CardImg top width="100%" height="100px" src="/img/caf6.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle>Blind Ch3mistry</CardTitle>
-                            <CardSubtitle>Old 11, New 19, 1st Floor, Brindhavan Apartment, Khader Nawaz Khan Road, Nungambakkam, Chennai</CardSubtitle>
-                            <CardText>₹700 for two people (approx.) </CardText>
-                            <div className="overlay-right">
-                                <Button type="button" class="btn btn-secondary" title="quick shop">
-                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
-                                </Button>
-                                <Button type="button" className="btn btn-secondary" title="wishlist">
-                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
-                                </Button>
-                                <Button type="button"  className="btn btn-secondary" title="add to cart">
-                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
-                                </Button>
-                            </div>
-                            <Button><Link to="/hotel">see profile</Link></Button>
-                        </CardBody>
-                    </Card>
-                    <Card className="car col-md-3">
-                        <CardImg top width="100%" height="100px" src="/img/caf7.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle>Backyard Bistro</CardTitle>
-                            <CardSubtitle>1581, Bharathi Colony, J Block, 15th Main Road, Anna Nagar West, Chennai</CardSubtitle>
-                            <CardText>₹600 for two people (approx.)</CardText>
-                            <div className="overlay-right">
-                                <Button type="button" class="btn btn-secondary" title="quick shop">
-                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
-                                </Button>
-                                <Button type="button" className="btn btn-secondary" title="wishlist">
-                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
-                                </Button>
-                                <Button type="button"  className="btn btn-secondary" title="add to cart">
-                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
-                                </Button>
-                            </div>
-                            <Button><Link to="/hotel">see profile</Link></Button>
-                        </CardBody>
-                    </Card>
-                    <Card className="car col-md-3">
-                        <CardImg top width="100%" height="100px" src="/img/caf8.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle>Ashvita Bistro</CardTitle>
-                            <CardSubtitle>11, Bawa Road, Alwarpet, Chenna</CardSubtitle>
-                            <CardText>₹1,000 for two people (approx.)</CardText>
-                            <div className="overlay-right">
-                                <Button type="button" class="btn btn-secondary" title="quick shop">
-                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
-                                </Button>
-                                <Button type="button" className="btn btn-secondary" title="wishlist">
-                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
-                                </Button>
-                                <Button type="button"  className="btn btn-secondary" title="add to cart">
-                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
-                                </Button>
-                            </div>
-                            <Button><Link to="/hotel">see profile</Link></Button>
-                        </CardBody>
-                    </Card>
-                    <Card className="car col-md-3">
-                        <CardImg top width="100%" height="100px" src="/img/caf9.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle>The Bark</CardTitle>
-                            <CardSubtitle>40, Maharaja Surya Rao Road, Dutch Village, Alwarpet, Chennai</CardSubtitle>
-                            <CardText>₹800 for two people (approx.)</CardText>
-                            <div className="overlay-right">
-                                <Button type="button" class="btn btn-secondary" title="quick shop">
-                                <Link to="/hotel" >     <i className="fa fa-eye" aria-hidden="true"></i></Link>
-                                </Button>
-                                <Button type="button" className="btn btn-secondary" title="wishlist">
-                                <Link to="/saved" >   <i class="fa fa-heart" aria-hidden="true"></i></Link> 
-                                </Button>
-                                <Button type="button"  className="btn btn-secondary" title="add to cart">
-                                <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
-                                </Button>
-                            </div>
-                            <Button>Button</Button>
-                        </CardBody>
-                    </Card>
+                    {
+                        this.state.cafes.map((cafe, index) => {
+                            return (
+                                <Card className="car col-md-3" id="card-list">
+                                    <CardImg top width="100%" height="100px" src={cafe.img}></CardImg>
+                                    <CardBody>
+                                        <CardTitle>{cafe.Name} </CardTitle>
+                                        <CardSubtitle>{cafe.Address}</CardSubtitle>
+                                        <CardText>{cafe.average_cost}
+                                            {cafe.time_slot}
+                                        </CardText>
+                                        <div className="overlay-right">
+                                            <Button type="button" class="btn btn-secondary" title="quick shop">
+                                                <Link to={{
+                                                    pathname: "/hotel",
+                                                    cafe: cafe
+                                                }}>     <i className="fa fa-eye" aria-hidden="true"></i></Link>
+                                            </Button>
+                                            <Button type="button" onClick={(event) => this.saveWishlist(event, cafe)} className="btn btn-secondary" title="wishlist" id="add">
+                                                <Link to="/saved"><i class="fa fa-heart" aria-hidden="true" /></Link>
+                                            </Button>
+                                                <Button type="button" className="btn btn-secondary" title="add to cart">
+                                                    <Link to="/booking" > <i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
+                                                </Button>
+                                        </div>
+                                            <Button><Link to={{
+                                                    pathname: "/hotel",
+                                                    cafe: cafe
+                                                }}> see profile</Link></Button>
+                                    </CardBody>
+                                </Card>
+                                
+                                    )
+                                })
+                            }
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.4344314241766!2d80.25231061433504!3d13.071630816213379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52672a02ed8cbb%3A0x89127af5b8dc9ba2!2sFromage!5e0!3m2!1sen!2sin!4v1583694253919!5m2!1sen!2sin" width="600px" height="450px"></iframe>
                 </div>
-                <hr></hr>
+                                <hr></hr>
+                                <ul id="cafe-list"></ul>
 
-                {/**about */}
+                {/**about */ }
 
-                <div className="container">
-                    <h1>ABOUT  US</h1>
+                            <div className="container">
+                                <h1>ABOUT  US</h1>
 
-                    <div class="card1-container col-md-3">
-                        <div className="card1">
-                            <div className="side"><img src="/img/cafe.jpg" width="100%" height="100%" alt="Jimmy Eat World" /></div>
-                            <div className="side back">Jimmy Eat World</div>
-                        </div>
-                    </div>
-                    <div class="card1-container col-md-3">
-                        <div className="card1">
-                            <div className="side"><img src="/img/cafe.jpg" width="100%" height="100%" alt="Jimmy Eat World" /></div>
-                            <div className="side back">Jimmy Eat World</div>
-                        </div>
-                    </div>
-                    <div class="card1-container col-md-3">
-                        <div className="card1">
-                            <div className="side"><img src="/img/cafe.jpg" width="100%" height="100%" alt="Jimmy Eat World" /></div>
-                            <div className="side back">Jimmy Eat World</div>
-                        </div>
-                    </div>
-                </div>
-
-                <hr></hr>
-
-                {/**contact */}
-
-                <div className="container">
-                    <h1>CONTACT  US</h1>
-                    <Card className="car col-md-3">
-                        <CardImg top width="100%" src="/img/cafe.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle className="title1">Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText className="a"> <a href="#"><i class="fa fa-dribbble"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-facebook"></i></a> </CardText>
-                            <Button className="button1">Button</Button>
-                        </CardBody>
-                    </Card>
-                    <Card className="car col-md-3">
-                        <CardImg top width="100%" src="/img/cafe.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle className="title1">Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText className="a"> <a href="#"><i class="fa fa-dribbble"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-facebook"></i></a> </CardText>
-                            <Button className="button1">Button</Button>
-                        </CardBody>
-                    </Card>
-                    <Card className="car col-md-3">
-                        <CardImg top width="100%" src="/img/cafe.jpg" alt="Card image cap" />
-                        <CardBody>
-                            <CardTitle className="title1">Card title</CardTitle>
-                            <CardSubtitle>Card subtitle</CardSubtitle>
-                            <CardText className="a"> <a href="#"><i class="fa fa-dribbble"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-facebook"></i></a> </CardText>
-                            <Button className="button1">Button</Button>
-                        </CardBody>
-                    </Card>
-                </div>
-                {/**footer */}
-                <section>
-                    <div className="footer">
-                        <div className="container text-center">
-                            <div className="row">
-                                <div className="col-md-4">
-                                    <h1>Useful Links</h1>
-                                    <p>Privacy Policy</p>
-                                    <p>Terms of Use</p>
-                                    <p>Return Policy</p>
-                                    <p>Discount Coupons</p>
-                                    
+                                <div class="card1-container col-md-3">
+                                    <div className="card1">
+                                        <div className="side"><img src="/img/cafe.jpg" width="100%" height="100%" alt="Jimmy Eat World" /></div>
+                                        <div className="side back">Jimmy Eat World</div>
+                                    </div>
                                 </div>
+                                <div class="card1-container col-md-3">
+                                    <div className="card1">
+                                        <div className="side"><img src="/img/cafe.jpg" width="100%" height="100%" alt="Jimmy Eat World" /></div>
+                                        <div className="side back">Jimmy Eat World</div>
+                                    </div>
+                                </div>
+                                <div class="card1-container col-md-3">
+                                    <div className="card1">
+                                        <div className="side"><img src="/img/cafe.jpg" width="100%" height="100%" alt="Jimmy Eat World" /></div>
+                                        <div className="side back">Jimmy Eat World</div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                <div className="col-md-4">
-                                    <h1>About us</h1>
-                                    <p>Contact us</p>
-                                    <p>career</p>
-                                    <p>commpany</p>
-                                    <p>affiliate</p>
-                                </div>
-                                <div className="col-md-4">
-                                    <h1>Follow Us On</h1>
-                                    <p><i className="fa fa-fw fa-instagram"></i>Instagram</p>
-                                    <p><i className="fa fa-fw fa-facebook" aria-hidden="true"></i> Facebook</p>
-                                    <p> <i className="fa fa-fw fa-youtube"></i>Youtube</p>
-                                </div>
                                 <hr></hr>
 
+
+                {/**contact */ }
+
+                            <div className="container">
+                                <h1>CONTACT  US</h1>
+                                <Card className="car col-md-3">
+                                    <CardImg top width="100%" src="/img/cafe.jpg" alt="Card image cap" />
+                                    <CardBody>
+                                        <CardTitle className="title1">Card title</CardTitle>
+                                        <CardSubtitle>Card subtitle</CardSubtitle>
+                                        <CardText className="a"> <a href="#"><i class="fa fa-dribbble"></i></a>
+                                            <a href="#"><i class="fa fa-twitter"></i></a>
+                                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                                            <a href="#"><i class="fa fa-facebook"></i></a> </CardText>
+                                        <Button className="button1">Button</Button>
+                                    </CardBody>
+                                </Card>
+                                <Card className="car col-md-3">
+                                    <CardImg top width="100%" src="/img/cafe.jpg" alt="Card image cap" />
+                                    <CardBody>
+                                        <CardTitle className="title1">Card title</CardTitle>
+                                        <CardSubtitle>Card subtitle</CardSubtitle>
+                                        <CardText className="a"> <a href="#"><i class="fa fa-dribbble"></i></a>
+                                            <a href="#"><i class="fa fa-twitter"></i></a>
+                                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                                            <a href="#"><i class="fa fa-facebook"></i></a> </CardText>
+                                        <Button className="button1">Button</Button>
+                                    </CardBody>
+                                </Card>
+                                <Card className="car col-md-3">
+                                    <CardImg top width="100%" src="/img/cafe.jpg" alt="Card image cap" />
+                                    <CardBody>
+                                        <CardTitle className="title1">Card title</CardTitle>
+                                        <CardSubtitle>Card subtitle</CardSubtitle>
+                                        <CardText className="a"> <a href="#"><i class="fa fa-dribbble"></i></a>
+                                            <a href="#"><i class="fa fa-twitter"></i></a>
+                                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                                            <a href="#"><i class="fa fa-facebook"></i></a> </CardText>
+                                        <Button className="button1">Button</Button>
+                                    </CardBody>
+                                </Card>
                             </div>
-                            <p className="copyright">made by <b>sivani rupavat&copy;</b></p>
+                            {/**footer */ }
+                            <section>
+                                <div className="footer">
+                                    <div className="container text-center">
+                                        <div className="row">
+                                            <div className="col-md-4">
+                                                <h1>Useful Links</h1>
+                                                <p>Privacy Policy</p>
+                                                <p>Terms of Use</p>
+                                                <p>Return Policy</p>
+                                                <p>Discount Coupons</p>
 
-                        </div>
-                    </div>
-                </section>
+                                            </div>
+
+                                            <div className="col-md-4">
+                                                <h1>About us</h1>
+                                                <p>Contact us</p>
+                                                <p>career</p>
+                                                <p>commpany</p>
+                                                <p>affiliate</p>
+                                            </div>
+                                            <div className="col-md-4">
+                                                <h1>Follow Us On</h1>
+                                                <p><i className="fa fa-fw fa-instagram"></i>Instagram</p>
+                                                <p><i className="fa fa-fw fa-facebook" aria-hidden="true"></i> Facebook</p>
+                                                <p> <i className="fa fa-fw fa-youtube"></i>Youtube</p>
+                                            </div>
+                                            <hr></hr>
+
+                                        </div>
+                                        <p className="copyright">made by <b>sivani rupavat&copy;</b></p>
+
+                                    </div>
+                                </div>
+                            </section>
+                                <script type="text/javascript">
+                                    $('.clockpicker').clockpicker();
+</script>
+                {/*<script src="check.js"></script>*/ }
             </div>
-        )
-    }
-}
-
-export default Home;
+                )
+            }
+        }
+        
+        
+        
+        export default Home;

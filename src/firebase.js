@@ -17,12 +17,13 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
+const db=firebase.firestore();
+db.settings({timestampsInSnapshots:true});
 firebase.analytics();
 
 
 
 
-export default firebase;
+export default  firebase;
   
  

@@ -16,14 +16,15 @@ class register extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      displayName:''
     }
   }
   signup(e) {
     e.preventDefault();
     // window.alert(this.state.email);
     debugger
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password,this.state.displayName)
       .then(response => {
         console.log(response)
       })
@@ -47,7 +48,11 @@ class register extends React.Component {
 
           <FormGroup >
             <h3>Registration</h3>
-
+            <div className="text-box">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              <input name="displayName" type="Name" value={this.state.displayName} onChange={(event) => this.handleChange(event)}
+                className="form-controller" placeholder="Name" />
+            </div>
             <div className="text-box">
               <i class="fa fa-user" aria-hidden="true"></i>
               <input name="email" type="email" value={this.state.email} onChange={(event) => this.handleChange(event)}
@@ -67,14 +72,8 @@ class register extends React.Component {
               <input type="radio" name="radiogroup1" id="rd2"/>
               <label for="rd2">Female</label>
               </div>
-              <div class="input_field select_option">
-                <select>
-                  <option>Select a country</option>
-                  <option>Option 1</option>
-                  <option>Option 2</option>
-                </select>
-                <div class="select_arrow"></div>
-              </div>
+            
+              
             <div class="input_field checkbox_option">
             	<input type="checkbox" id="cb1"/>
     			<label for="cb1">I agree with terms and conditions</label>
